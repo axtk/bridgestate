@@ -46,11 +46,7 @@ export class State<
     this._init();
     if (options?.autoStart !== false) this.start();
   }
-  _init() {
-    this.on("effect", () => {
-      this.start();
-    });
-  }
+  _init() {}
   _call(callback: () => void) {
     if (this._active) callback();
     else this._queue.push(callback);
