@@ -8,9 +8,11 @@ route.on("navigationcomplete", () => {
   renderMainContent();
 });
 
+// Enable SPA navigation with HTML links
 route.observe(document);
 
 function renderHeader() {
+  // `at(url, x, y)` acts like `atURL ? x : y`
   document.querySelector("header")!.className = route.at(
     "/",
     "full",
@@ -19,6 +21,8 @@ function renderHeader() {
 }
 
 function renderMainContent() {
+  // `ok` is `true` if the current URL matches the given URL pattern.
+  // `params` contains the capturing groups from the RegExp URL pattern.
   let { ok: isSection, params } = route.match(/^\/sections\/(?<id>\d+)\/?/);
 
   if (isSection)

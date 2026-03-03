@@ -3,9 +3,16 @@ import "./index.css";
 
 let route = new Route();
 
+// Use the "navigationstart" event callback for anything that occurs before
+// a URL navigation
 route.on("navigationstart", ({ href }) => {
   if (href === "/") {
-    route.href = "/sections/1"; // redirection
+    // Redirect
+    route.href = "/sections/1";
+    // Similarly to the `window.location` API, also equivalent to:
+    // `route.assign("/sections/1");`
+
+    // Quit further event handling
     return false;
   }
 });
@@ -15,6 +22,7 @@ route.on("navigationcomplete", () => {
   renderMainContent();
 });
 
+// Enable SPA navigation with HTML links
 route.observe(document);
 
 function renderHeader() {
