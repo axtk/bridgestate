@@ -46,14 +46,20 @@ A `"set"` event callback is called each time the state value changes and immedia
 
 A variety of `State` that syncs its data to the browser storage and restores it on page reload. Otherwise, almost identical to `State` in usage.
 
-```js
-import { PersistentState } from "sidestate";
+```diff
+- import { State } from "sidestate";
++ import { PersistentState } from "sidestate";
 
-const counterState = new PersistentState(42, { key: "counter" });
+- const counterState = new State(42);
++ const counterState = new PersistentState(42, { key: "counter" });
 
-counterState.on("set", ({ current }) => {
-  document.querySelector("output").textContent = String(current);
-});
+  document.querySelector("button").addEventListener("click", () => {
+    counterState.setValue((value) => value + 1);
+  });
+
+  counterState.on("set", ({ current }) => {
+    document.querySelector("output").textContent = String(current);
+  });
 ```
 
 By default, `PersistentState` stores its data at the specified `key` in `localStorage` and transforms the data with `JSON.stringify()` and `JSON.parse()`. Switch to `sessionStorage` by setting `options.session` to `true` in `new PersistentState(value, options)`. Set custom `options.serialize()` and `options.deserialize()` to override the default data transforms.
