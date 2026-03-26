@@ -38,7 +38,10 @@ function isLinkElement(x: unknown): x is LinkElement {
 function toggleActive(element: Element | Node, route: Route) {
   if (!isLinkElement(element)) return;
 
-  if (element.hasAttribute("href") && route.match(route.toValue(element.href)).ok)
+  if (
+    element.hasAttribute("href") &&
+    route.match(route.toValue(element.href)).ok
+  )
     element.dataset.active = "true";
   else delete element.dataset.active;
 }
