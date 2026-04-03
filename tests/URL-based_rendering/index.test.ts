@@ -44,7 +44,9 @@ class Playground {
   }
   /** Helps make sure there were no full page reloads. */
   async hasSessionId(value: string) {
-    expect(await this.page.evaluate(() => window.document.body.dataset.sessionId)).toBe(value);
+    expect(
+      await this.page.evaluate(() => window.document.body.dataset.sessionId),
+    ).toBe(value);
   }
 }
 
