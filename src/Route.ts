@@ -53,25 +53,9 @@ export type RoutePayloadMap = URLStatePayloadMap & {
 export type RouteOptions = URLStateOptions;
 
 export class Route extends URLState<RoutePayloadMap> {
+  _observeInited = false;
   constructor(href: LocationValue | null = null, options?: RouteOptions) {
     super(String(href ?? ""), options);
-  }
-  _init() {
-    super._init();
-
-    if (typeof window === "undefined") return;
-
-    let handleClick = (event: MouseEvent) => {
-      this.emit("documentclick", event);
-    };
-
-    this.on("start", () => {
-      document.addEventListener("click", handleClick);
-    });
-
-    this.on("stop", () => {
-      document.removeEventListener("click", handleClick);
-    });
   }
   /**
    * Enables SPA navigation with HTML links inside the specified container.
@@ -86,6 +70,26 @@ export class Route extends URLState<RoutePayloadMap> {
     container: ContainerElement | (() => ContainerElement),
     elements: ObservedElement = "a, area",
   ) {
+    if (typeof window === "undefined") return;
+
+    if (!this._observeInited) {
+      let handleClick = (event: MouseEvent) => {
+        this.emit("documentclick", event);
+      };
+
+      this.on("start", () => {
+        document.addEventListener("click", handleClick);
+      });
+
+      this.on("stop", () => {
+        document.removeEventListener("click", handleClick);
+      });
+
+      if (this.active) document.addEventListener("click", handleClick);
+
+      this._observeInited = true;
+    }
+
     let resolveParams = () => {
       let resolvedContainer =
         typeof container === "function" ? container() : container;
