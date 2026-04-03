@@ -37,6 +37,15 @@ class Playground {
   async hasCompactHeader() {
     await expect(this.page.locator("header")).toHaveClass("compact");
   }
+  async setSessionId(value: string) {
+    await this.page.evaluate((value) => {
+      window.document.body.dataset.sessionId = value;
+    }, value);
+  }
+  /** Helps make sure there were no full page reloads. */
+  async hasSessionId(value: string) {
+    expect(await this.page.evaluate(() => window.document.body.dataset.sessionId)).toBe(value);
+  }
 }
 
 test.describe("routing", () => {
@@ -50,10 +59,12 @@ test.describe("routing", () => {
     server.close();
   });
 
-  test("route links", async ({ page }) => {
+  test("spa links", async ({ page }) => {
     let p = new Playground(page);
+    let sessionId = "spa";
 
     await page.goto("/");
+    await p.setSessionId(sessionId);
     await p.hasMainTitle();
     await p.hasFullHeader();
 
@@ -63,6 +74,7 @@ test.describe("routing", () => {
 
     await p.clickLink("Section 1");
     await p.hasPath("/sections/1");
+    await p.hasSessionId(sessionId);
     await p.hasSectionTitle("Section 1");
     await p.hasCompactHeader();
 
@@ -72,6 +84,7 @@ test.describe("routing", () => {
 
     await p.clickLink("Section 2");
     await p.hasPath("/sections/2");
+    await p.hasSessionId(sessionId);
     await p.hasSectionTitle("Section 2");
     await p.hasCompactHeader();
 
@@ -81,6 +94,7 @@ test.describe("routing", () => {
 
     await p.clickLink("Intro");
     await p.hasPath("/");
+    await p.hasSessionId(sessionId);
     await p.hasSectionTitle("Intro");
     await p.hasFullHeader();
 
