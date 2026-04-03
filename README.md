@@ -113,6 +113,19 @@ document.querySelector("h1").textContent = route.at(
 );
 ```
 
+Or, alternatively, with a string URL pattern:
+
+```js
+import { url } from "url-shape";
+
+document.querySelector("h1").textContent = route.at(
+  url("/sections/:id"),
+  ({ params }) => `Section ${params.id}`,
+);
+```
+
+Use a URL builder like the one from `url-shape` in conjunction with a URL schema to set up type-safe routes.
+
 Enable SPA navigation with HTML links inside the specified container (or the entire `document`) without any changes to the HTML:
 
 ```js
