@@ -2,7 +2,7 @@ import { url } from "url-shape";
 import { Route } from "../../src/Route.ts";
 import "./index.css";
 
-let route = new Route();
+const route = new Route();
 
 route.on("navigationcomplete", () => {
   renderHeader();
@@ -24,7 +24,7 @@ function renderHeader() {
 function renderMainContent() {
   // `ok` is `true` if the current URL matches the given URL pattern.
   // `params` contains the path placeholder values.
-  let { ok: isSection, params } = route.match(url("/sections/:id"));
+  const { ok: isSection, params } = route.match(url("/sections/:id"));
 
   if (isSection)
     document.querySelector('[data-id="section"] h2 span')!.textContent =

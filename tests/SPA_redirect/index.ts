@@ -1,7 +1,7 @@
 import { Route } from "../../src/Route.ts";
 import "./index.css";
 
-let route = new Route();
+const route = new Route();
 
 // Use the "navigationstart" event callback for anything that occurs before
 // a URL navigation
@@ -31,8 +31,8 @@ function renderHeader() {
 }
 
 function renderMainContent() {
-  let matches = route.href.match(/^\/sections\/(?<id>\d+)\/?/);
-  let isSection = matches !== null;
+  const matches = route.href.match(/^\/sections\/(?<id>\d+)\/?/);
+  const isSection = matches !== null;
 
   document.querySelector('[data-id="section"] h2 span')!.textContent =
     matches?.[1] ?? "";

@@ -1,7 +1,7 @@
 import { Route } from "../../src/Route.ts";
 import "./index.css";
 
-let route = new Route();
+const route = new Route();
 
 route.on("navigationcomplete", () => {
   render();

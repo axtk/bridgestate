@@ -1,10 +1,10 @@
 import { State } from "../../src/State.ts";
 
-let formState = new State({ username: "" });
+const formState = new State({ username: "" });
 
 // Input
 
-let input = document.querySelector("input")!;
+const input = document.querySelector("input")!;
 
 input.addEventListener("input", () => {
   formState.setValue((state) => ({ ...state, username: input.value }));
@@ -12,8 +12,8 @@ input.addEventListener("input", () => {
 
 // Output
 
-let output = document.querySelector("output")!;
-let defaultContent = output.textContent;
+const output = document.querySelector("output")!;
+const defaultContent = output.textContent;
 
 formState.on("update", ({ current }) => {
   output.textContent = current.username || defaultContent;

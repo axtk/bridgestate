@@ -5,7 +5,7 @@ import "./index.css";
 // Use `session: true` option to use sessionStorage, set `serialize` and
 // `deserialize` options to define the state value transforms (default:
 // `JSON.stringify()` and `JSON.parse()`.
-let counterState = new PersistentState(42, {
+const counterState = new PersistentState(42, {
   key: "stateshape-dev-counter",
 });
 // Beyond the initialization, instances of PersistentState act pretty much

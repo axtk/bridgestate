@@ -1,7 +1,7 @@
 import { State } from "../../src/State.ts";
 import "./index.css";
 
-let counterState = new State(42);
+const counterState = new State(42);
 
 // The value changed by the buttons is displayed in the <output> element, but
 // all elements interact only with the shared state, not with each other.
