@@ -246,10 +246,12 @@ export class Route extends URLState<RoutePayloadMap> {
     return compileURL<T>(urlPattern, data);
   }
   /**
-   * Checks whether `urlPattern` matches the current URL and returns either
-   * based on `x` if there is a match, or based on `y` otherwise. (It
-   * loosely resembles the ternary conditional operator
-   * `matchesPattern ? x : y`.)
+   * `at(urlPattern)` returns `true` if `urlPattern` matches the current URL,
+   * and `false` otherwise.
+   *
+   * `at(urlPattern, x, y?)` returns either based on `x` if `urlPattern`
+   * matches the current URL, or based on `y` otherwise. (It loosely resembles
+   * the ternary conditional operator `matchesURLPattern ? x : y`.)
    *
    * If the current location matches `urlPattern`, `at(urlPattern, x, y)`
    * returns:
