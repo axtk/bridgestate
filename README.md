@@ -98,19 +98,28 @@ route.href.startsWith("/sections/");
 /^\/sections\/\d+\/?/.test(route.href);
 ```
 
-Or, alternatively, with `route.at(url, x, y)` which is similar to the ternary conditional operator `atURL ? x : y`:
+Or, alternatively, with `route.at(url)` returning `true` if the current URL matches `url`, and `false` otherwise:
+
+```js
+route.at("/intro"); // `true` at "/intro", `false` otherwise
+route.at(/^\/sections\//); // `true` at "/sections/*"
+```
+
+Or with the extended form `route.at(url, x, y?)`, which is similar to the ternary conditional operator `atURL ? x : y`:
 
 ```js
 document.querySelector("header").className = route.at("/", "full", "compact");
+// at "/" ? then "full" : otherwise "compact"
 ```
 
-Use `route.at(url, x, y)` with dynamic values that require values from the URL pattern's capturing groups:
+Use `route.at(url, x, y?)` with dynamic values that require values from the URL pattern's capturing groups:
 
 ```js
 document.querySelector("h1").textContent = route.at(
   /^\/sections\/(?<id>\d+)\/?/,
   ({ params }) => `Section ${params.id}`,
 );
+// at "/sections/:id", "Section <id>" (otherwise `undefined`)
 ```
 
 Or, alternatively, with a string URL pattern:
@@ -122,6 +131,7 @@ document.querySelector("h1").textContent = route.at(
   url("/sections/:id"),
   ({ params }) => `Section ${params.id}`,
 );
+// at "/sections/:id", "Section <id>" (otherwise `undefined`)
 ```
 
 Use a URL builder like the one from `url-shape` also in conjunction with a URL schema to set up type-safe routes ([example](https://codesandbox.io/p/sandbox/qg7qg3?file=%2Fsrc%2Findex.ts)).
