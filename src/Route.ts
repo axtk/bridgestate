@@ -265,29 +265,29 @@ export class Route extends URLState<RoutePayloadMap> {
    */
   at<P extends LocationPattern, X>(
     urlPattern: P,
-    matchOutput: X | MatchHandler<P, X>,
+    x: X | MatchHandler<P, X>,
   ): X | undefined;
 
   at<P extends LocationPattern, X, Y>(
     urlPattern: P,
-    matchOutput: X | MatchHandler<P, X>,
-    mismatchOutput: Y | MatchHandler<P, Y>,
+    x: X | MatchHandler<P, X>,
+    y: Y | MatchHandler<P, Y>,
   ): X | Y;
 
   at<P extends LocationPattern, X, Y>(
     urlPattern: P,
-    matchOutput: X | MatchHandler<P, X>,
-    mismatchOutput?: Y | MatchHandler<P, Y>,
+    x: X | MatchHandler<P, X>,
+    y?: Y | MatchHandler<P, Y>,
   ): X | Y | undefined {
     let result = this.match<P>(urlPattern);
 
     if (!result.ok)
-      return typeof mismatchOutput === "function"
-        ? (mismatchOutput as MatchHandler<P, Y>)(result)
-        : mismatchOutput;
+      return typeof y === "function"
+        ? (y as MatchHandler<P, Y>)(result)
+        : y;
 
-    return typeof matchOutput === "function"
-      ? (matchOutput as MatchHandler<P, X>)(result)
-      : matchOutput;
+    return typeof x === "function"
+      ? (x as MatchHandler<P, X>)(result)
+      : x;
   }
 }
