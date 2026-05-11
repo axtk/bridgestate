@@ -265,9 +265,7 @@ export class Route extends URLState<RoutePayloadMap> {
    * - `y({ params })`, if `y` is a function, with `params` extracted from
    * the current URL.
    */
-  at<P extends LocationPattern>(
-    urlPattern: P,
-  ): boolean;
+  at<P extends LocationPattern>(urlPattern: P): boolean;
 
   at<P extends LocationPattern, X>(
     urlPattern: P,
@@ -290,12 +288,8 @@ export class Route extends URLState<RoutePayloadMap> {
     if (x === undefined && y === undefined) return result.ok;
 
     if (!result.ok)
-      return typeof y === "function"
-        ? (y as MatchHandler<P, Y>)(result)
-        : y;
+      return typeof y === "function" ? (y as MatchHandler<P, Y>)(result) : y;
 
-    return typeof x === "function"
-      ? (x as MatchHandler<P, X>)(result)
-      : x;
+    return typeof x === "function" ? (x as MatchHandler<P, X>)(result) : x;
   }
 }
